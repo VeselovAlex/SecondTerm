@@ -8,7 +8,8 @@ PListEl::PListEl(int val)
 
 PListEl::~PListEl()
 {
-    delete next;
+    if (!isEnding())
+        delete next;
 }
 
 int PListEl::getValue()
@@ -19,5 +20,12 @@ int PListEl::getValue()
 bool PListEl::isEnding()
 {
     return next == nullptr;
+}
+
+void PListEl::print()
+{
+    std::cout << value << '\t';
+    if (!isEnding())
+        next.print();
 }
 
