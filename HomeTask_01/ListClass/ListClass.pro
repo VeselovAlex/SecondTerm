@@ -4,11 +4,11 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     list.cpp \
-    plist.cpp \
-    plistel.cpp
+    slist.cpp \
+    listbox.cpp
 
 HEADERS += \
     list.h \
-    plist.h \
-    plistel.h
+    slist.h \
+    listbox.h
 
