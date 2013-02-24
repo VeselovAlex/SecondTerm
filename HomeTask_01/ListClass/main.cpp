@@ -1,12 +1,12 @@
 #include <iostream>
-#include "slist.h"
+#include "doublelist.h"
 
 using namespace std;
 
 int main()
 {
     cout << "Initialize Pointer List:" << endl;
-    List *testList = new SingleList;
+    List *testList = new DoubleList;
     cout << "Success" << endl;
     cout << "-----------------------------------------------------------------------------" << endl;
     cout << "Enter the values:" << endl;
