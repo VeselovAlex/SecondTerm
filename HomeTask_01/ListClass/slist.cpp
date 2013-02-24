@@ -1,43 +1,43 @@
 #include "slist.h"
 
-SList::SList()
+SingleList::SingleList()
 {
     head = NULL;
     size = 0;
     empty = true;
 }
 
-SList::~SList()
+SingleList::~SingleList()
 {
     if (!isEmpty())
         delete head;
 }
 
 
-void SList::add(int value)
+void SingleList::add(int value)
 {
     if (isEmpty())
-        head = new ListBox(value);
+        head = new ListEl(value);
     else if (head->getVal() >= value)
     {
-        ListBox *temp = head;
-        head = new ListBox(value);
+        ListEl *temp = head;
+        head = new ListEl(value);
         head->next = temp;
     }
     else
     {
-        ListBox *temp = head;
+        ListEl *temp = head;
         while ((!temp->isEnding()) && (temp->next->getVal() < value))
             temp = temp->next;
-        ListBox* cont = temp->next;
-        temp->next = new ListBox(value);
+        ListEl* cont = temp->next;
+        temp->next = new ListEl(value);
         temp->next->next = cont;
     }
     size++;
     empty = false;
 }
 
-void SList::remove(int value)
+void SingleList::remove(int value)
 {
     if (isEmpty() || head->getVal() > value)
     {
@@ -53,7 +53,7 @@ void SList::remove(int value)
             empty = true;
             return;
         }
-        ListBox *temp = head;
+        ListEl *temp = head;
         head = head->next;
         temp->next = NULL;
         delete  temp;
@@ -61,12 +61,12 @@ void SList::remove(int value)
     }
     else
     {
-        ListBox *temp = head;
+        ListEl *temp = head;
         while ((!temp->next->isEnding()) && (temp->next->getVal() < value))
             temp = temp->next;
         if (temp->next->getVal() == value)
         {
-            ListBox* cont = temp->next;
+            ListEl* cont = temp->next;
             temp->next = temp->next->next;
             cont->next = NULL;
             delete cont;
@@ -77,7 +77,7 @@ void SList::remove(int value)
 
 }
 
-void SList::printall()
+void SingleList::printall()
 {
     if (!isEmpty())
         head->print();

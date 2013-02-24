@@ -1,37 +1,37 @@
-#include "listbox.h"
+#include "listel.h"
 #include <iostream>
 
-ListBox::ListBox(int value)
+ListEl::ListEl(int value)
 {
     val = value;
     next = NULL;
 }
 
-ListBox::~ListBox()
+ListEl::~ListEl()
 {
     if (!isEnding())
         delete next;
 }
 
 
-int ListBox::getVal() const
+int ListEl::getVal() const
 {
     return val;
 }
 
-void ListBox::setVal(int value)
+void ListEl::setVal(int value)
 {
     val = value;
 }
 
-void ListBox::print()
+void ListEl::print()
 {
     std::cout << val << '\t';
     if (!isEnding())
         next->print();
 }
 
-bool ListBox::isEnding() const
+bool ListEl::isEnding() const
 {
     return next == NULL;
 }

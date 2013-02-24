@@ -1,18 +1,17 @@
 #pragma once
 #include <cstdlib>
 
-
-class ListBox
+class ListEl
 {
 public:
-    ListBox(int value);
-    ~ListBox();
+    ListEl(int value);
+    ~ListEl();
     int getVal() const;
     void setVal(int value);
     void print();
     bool isEnding() const;
-    ListBox* next;
-private:
+    ListEl* next;
+protected:
     int val;
 };
 

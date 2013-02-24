@@ -6,36 +6,28 @@ using namespace std;
 int main()
 {
     cout << "Initialize Pointer List:" << endl;
-    List *testList = new SList;
-
-    /*ListBox *first = new ListBox(15);
-    ListBox *second = new ListBox (10);
-    first->next = second;
-    first->print();
-    second->print();
-    delete first;
-    second->print();*/
-
+    List *testList = new SingleList;
     cout << "Success" << endl;
     cout << "-----------------------------------------------------------------------------" << endl;
     cout << "Enter the values:" << endl;
     int num = 5;
+    cin >> num;
     while (num != 0)
     {
-        cin >> num;
         cout << "Adding\t" << num;
         testList->add(num);
         cout << "\tSuccess" << endl;
+        cin >> num;
     };
     cout << "-----------------------------------------------------------------------------" << endl;
     cout << "Enter the values to remove:" << endl;
-    num = 5;
+    cin >> num;
     while (num != 0)
     {
-        cin >> num;
         cout << "Removing\t" << num;
         testList->remove(num);
         cout << "\tSuccess" << endl;
+        cin >> num;
     };
     cout << "-----------------------------------------------------------------------------" << endl;
     cout << "Printing:" << endl;

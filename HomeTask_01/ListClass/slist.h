@@ -1,17 +1,17 @@
 #pragma once
 #include "list.h"
-#include "listbox.h"
+#include "listel.h"
 
-class SList : public List
+class SingleList : public List
 {
 public:
-    SList();
-    ~SList();
+    SingleList();
+    ~SingleList();
     void add(int value);
     void remove(int value);
     void printall();
 private:
-    ListBox* head;
+    ListEl* head;
 };
 
 
