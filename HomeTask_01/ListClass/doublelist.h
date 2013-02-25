@@ -11,6 +11,6 @@ public:
     void remove(int value);
     void printall();
 private:
-    DoubleListEl* head;
+    DoubleListElement* head;
 };
 

@@ -11,7 +11,7 @@ public:
     void remove(int value);
     void printall();
 private:
-    ListEl* head;
+    ListElement* head;
 };
 
 

@@ -9,8 +9,7 @@ ListEl::ListEl(double value)
 
 ListEl::~ListEl()
 {
-    if (!isEnding())
-        delete next;
+    delete next;
 }
 
 

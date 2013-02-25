@@ -1,16 +1,16 @@
 #pragma once
 
-class DoubleListEl
+class DoubleListElement
 {
 public:
-    DoubleListEl(int value);
-    ~DoubleListEl();
+    DoubleListElement(int value);
+    ~DoubleListElement();
     int getVal() const;
     void setVal(int value);
     void print();
     bool isEnding() const;
-    DoubleListEl* next;
-    DoubleListEl* prev;
+    DoubleListElement* next;
+    DoubleListElement* prev;
 protected:
     int val;
 };

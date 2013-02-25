@@ -17,26 +17,26 @@ DoubleList::~DoubleList()
 void DoubleList::add(int value)
 {
     if (isEmpty())
-        head = new DoubleListEl(value);
+        head = new DoubleListElement(value);
     else if (head->getVal() >= value)
     {
-        head->prev = new DoubleListEl(value);
+        head->prev = new DoubleListElement(value);
         head->prev->next = head;
         head = head->prev;
     }
     else
     {
-        DoubleListEl *temp = head;
+        DoubleListElement *temp = head;
         while ((!temp->isEnding()) && (temp->next->getVal() < value))
             temp = temp->next;
         if (temp->isEnding())
         {
-            temp->next = new DoubleListEl(value);
+            temp->next = new DoubleListElement(value);
             temp->next->prev = temp;
         }
         else
         {
-            temp->next->prev = new DoubleListEl(value);
+            temp->next->prev = new DoubleListElement(value);
             temp->next->prev->prev = temp;
             temp->next->prev->next = temp->next;
             temp->next = temp->next->prev;
@@ -50,7 +50,7 @@ void DoubleList::remove(int value)
 {
     if (isEmpty() || head->getVal() > value)
         return;
-    DoubleListEl *temp = head;
+    DoubleListElement *temp = head;
     while (temp->getVal() < value)
         temp = temp->next;
     if (temp->getVal() > value)

@@ -17,20 +17,20 @@ SingleList::~SingleList()
 void SingleList::add(int value)
 {
     if (isEmpty())
-        head = new ListEl(value);
+        head = new ListElement(value);
     else if (head->getVal() >= value)
     {
-        ListEl *temp = head;
-        head = new ListEl(value);
+        ListElement *temp = head;
+        head = new ListElement(value);
         head->next = temp;
     }
     else
     {
-        ListEl *temp = head;
+        ListElement *temp = head;
         while ((!temp->isEnding()) && (temp->next->getVal() < value))
             temp = temp->next;
-        ListEl* cont = temp->next;
-        temp->next = new ListEl(value);
+        ListElement* cont = temp->next;
+        temp->next = new ListElement(value);
         temp->next->next = cont;
     }
     size++;
@@ -53,7 +53,7 @@ void SingleList::remove(int value)
             empty = true;
             return;
         }
-        ListEl *temp = head;
+        ListElement *temp = head;
         head = head->next;
         temp->next = NULL;
         delete  temp;
@@ -61,12 +61,12 @@ void SingleList::remove(int value)
     }
     else
     {
-        ListEl *temp = head;
+        ListElement *temp = head;
         while ((!temp->next->isEnding()) && (temp->next->getVal() < value))
             temp = temp->next;
         if (temp->next->getVal() == value)
         {
-            ListEl* cont = temp->next;
+            ListElement* cont = temp->next;
             temp->next = temp->next->next;
             cont->next = NULL;
             delete cont;

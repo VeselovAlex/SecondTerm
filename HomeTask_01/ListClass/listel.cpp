@@ -1,37 +1,36 @@
 #include "listel.h"
 #include <iostream>
 
-ListEl::ListEl(int value)
+ListElement::ListElement(int value)
 {
     val = value;
     next = NULL;
 }
 
-ListEl::~ListEl()
+ListElement::~ListElement()
 {
-    if (!isEnding())
-        delete next;
+    delete next;
 }
 
 
-int ListEl::getVal() const
+int ListElement::getVal() const
 {
     return val;
 }
 
-void ListEl::setVal(int value)
+void ListElement::setVal(int value)
 {
     val = value;
 }
 
-void ListEl::print()
+void ListElement::print()
 {
     std::cout << val << '\t';
     if (!isEnding())
         next->print();
 }
 
-bool ListEl::isEnding() const
+bool ListElement::isEnding() const
 {
     return next == NULL;
 }

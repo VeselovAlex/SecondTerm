@@ -3,7 +3,7 @@
 ArrayStack::ArrayStack(int max)
 {
     maxSize = max;
-    stackarr = new double[max];
+    stackArray = new double[max];
     top = 0;
     free = 0;
 }
@@ -11,14 +11,14 @@ ArrayStack::ArrayStack(int max)
 ArrayStack::~ArrayStack()
 {
     if (!isEmpty())
-        delete[] stackarr;
+        delete[] stackArray;
 }
 
 void ArrayStack::push(double val)
 {
     if (size >= maxSize)
         return;
-    stackarr[free] = val;
+    stackArray[free] = val;
     top = free;
     free++;
     size++;
@@ -34,10 +34,10 @@ double ArrayStack::pop()
     size--;
     if (size <= 0)
         empty = true;
-    return stackarr[free];
+    return stackArray[free];
 }
 
 double ArrayStack::peek() const
 {
-    return stackarr[top];
+    return stackArray[top];
 }

@@ -11,7 +11,7 @@ public:
     double peek() const;
 private:
     int maxSize;
-    double *stackarr;
+    double *stackArray;
     int top;
     int free;
 };

@@ -1,37 +1,37 @@
 #include "doublelistel.h"
 #include <iostream>
 
-DoubleListEl::DoubleListEl(int value)
+DoubleListElement::DoubleListElement(int value)
 {
     val = value;
     next = NULL;
     prev = NULL;
 }
 
-int DoubleListEl::getVal() const
+int DoubleListElement::getVal() const
 {
     return val;
 }
 
-void DoubleListEl::setVal(int value)
+void DoubleListElement::setVal(int value)
 {
     val = value;
 }
 
-DoubleListEl::~DoubleListEl()
+DoubleListElement::~DoubleListElement()
 {
     if (!isEnding())
         delete next;
 }
 
-void DoubleListEl::print()
+void DoubleListElement::print()
 {
     std::cout << val << '\t';
     if (!isEnding())
         next->print();
 }
 
-bool DoubleListEl::isEnding() const
+bool DoubleListElement::isEnding() const
 {
     return next == NULL;
 }
