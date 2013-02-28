@@ -1,16 +1,16 @@
 #pragma once
 #include <cstdlib>
 
-class ListEl
+class ListElement
 {
 public:
-    ListEl(double value);
-    ~ListEl();
+    ListElement(double value);
+    ~ListElement();
     double getVal() const;
     void setVal(double value);
     void print();
     bool isEnding() const;
-    ListEl* next;
+    ListElement* next;
 protected:
     double val;
 };

@@ -4,6 +4,7 @@ class Stack
 {
 public:
     Stack();
+    virtual ~Stack();
     virtual void push(double val) = 0;
     virtual double pop() = 0;
     virtual double peek() const = 0;

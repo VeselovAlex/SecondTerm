@@ -6,6 +6,10 @@ Stack::Stack()
     size = 0;
 }
 
+Stack::~Stack()
+{
+}
+
 bool Stack::isEmpty() const
 {
     return empty;

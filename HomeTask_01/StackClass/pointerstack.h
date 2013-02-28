@@ -11,6 +11,6 @@ public:
     double pop();
     double peek() const;
 private:
-    ListEl* top;
+    ListElement* top;
 };
 

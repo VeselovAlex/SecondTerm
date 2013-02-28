@@ -13,7 +13,7 @@ PointerStack::~PointerStack()
 
 void PointerStack::push(double val)
 {
-    ListEl* tmp = new ListEl(val);
+    ListElement* tmp = new ListElement(val);
     tmp->next = top;
     top = tmp;
     size++;
@@ -26,7 +26,7 @@ double PointerStack::pop()
         return 0;
 
     double result = top->getVal();
-    ListEl* tmp = top;
+    ListElement* tmp = top;
     top = tmp->next;
     tmp->next = NULL;
     delete tmp;

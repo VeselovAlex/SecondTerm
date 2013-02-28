@@ -4,14 +4,13 @@ ArrayStack::ArrayStack(int max)
 {
     maxSize = max;
     stackArray = new double[max];
-    top = 0;
+    top = -1;
     free = 0;
 }
 
 ArrayStack::~ArrayStack()
 {
-    if (!isEmpty())
-        delete[] stackArray;
+    delete[] stackArray;
 }
 
 void ArrayStack::push(double val)
