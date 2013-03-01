@@ -36,7 +36,7 @@ int calculator()
 {
     Stack* operators = new ArrayStack(128);
     Stack* numbers = new PointerStack;
-    int addition = 0;
+    int counter = 0;
 
     double number = 0;
     char oper = ' ';
@@ -65,14 +65,31 @@ int calculator()
                 else
                 {
                     int currPriority = priority(operators->peek());
-                    if (priority(oper) > currPriority)
-                        operators->push(oper);
-                    else
+                    while ((priority(oper) <= currPriority))
                     {
                         double result = operation(numbers->pop(), numbers->pop(), operators->pop());
                         numbers->push(result);
-                        operators->push(oper);
-                    };
+                        currPriority = priority(operators->peek());
+                    }
+                    operators->push(oper);
+                }
+            }
+            if (oper == '(')
+            {
+                counter++;
+                operators->push(oper);
+            }
+            if (oper == ')')
+            {
+                counter--;
+                if (counter < 0)
+                    return 2;
+                oper = operators->pop();
+                while (oper != '(')
+                {
+                    double result = operation(numbers->pop(), numbers->pop(), oper);
+                    numbers->push(result);
+                    oper = operators->pop();
                 }
             }
         }
@@ -80,7 +97,7 @@ int calculator()
     }
     double result = operation(numbers->pop(), numbers->pop(), operators->pop());
     while(!operators->isEmpty())
-        result = operation(result, numbers->pop(), operators->pop());
+        result = operation(numbers->pop(),result, operators->pop());
 
     cout << result;
 
@@ -91,6 +108,7 @@ int calculator()
 }
 int main()
 {
+    cout << "Enter the expression:" << endl;
     calculator();
     return 0;
 }
