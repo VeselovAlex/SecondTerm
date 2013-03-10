@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     firstOperand->setRange(INT_MIN, INT_MAX);
     QObject::connect(firstOperand, SIGNAL(valueChanged(int)),
                      calc, SLOT(changeFirstOperand(int)));
-    emit firstOperand->valueChanged(0);
+    firstOperand->setValue(0);
 
     QSpinBox *secondOperand = new QSpinBox;
     secondOperand->setFont(calcFont);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     secondOperand->setRange(INT_MIN, INT_MAX);
     QObject::connect(secondOperand, SIGNAL(valueChanged(int)),
                      calc, SLOT(changeSecondOperand(int)));
-    emit secondOperand->valueChanged(0);
+    secondOperand->setValue(0);
 
     QComboBox *operation = new QComboBox;
     operation->setFont(calcFont);
@@ -39,7 +39,8 @@ int main(int argc, char *argv[])
     operation->addItem("/");
     QObject::connect(operation, SIGNAL(currentTextChanged(QString)),
                      calc, SLOT(changeOperation(QString)));
-    emit operation->currentTextChanged("+");
+    operation->setCurrentIndex(1);
+    operation->setCurrentIndex(0);
 
     QLabel *equalSign = new QLabel;
     equalSign->setText(" = ");

@@ -41,7 +41,7 @@ void Calculator::changeOperation(QString newOperation)
 
 void Calculator::getResult()
 {
-    resultToShow.setNum(result);
+    resultToShow.setNum(result, 'f', 2);
     double preResult = result;
     if (operation == "+")
         preResult = firstOperand + secondOperand;
@@ -57,7 +57,7 @@ void Calculator::getResult()
     if (result != preResult)
     {
         result = preResult;
-        resultToShow.setNum(result,'f',2);
+        resultToShow.setNum(result, 'f', 2);
         emit resultChanged(result);
     }
     emit resultChanged(resultToShow);
