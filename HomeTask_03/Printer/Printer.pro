@@ -4,12 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    printer.cpp \
     consoleprinter.cpp \
-    fileprinter.cpp
+    fileprinter.cpp \
+    matrix.cpp
 
 HEADERS += \
     printer.h \
     consoleprinter.h \
-    fileprinter.h
+    fileprinter.h \
+    matrix.h
 
