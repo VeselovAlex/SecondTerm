@@ -1,7 +1,7 @@
 #include "calculator.h"
 
 Calculator::Calculator(QObject *parent) :
-    QObject(parent)
+    QObject(parent), firstOperand(0), secondOperand(0), operation(""), result(0), resultToShow("")
 {
     QObject::connect(this, SIGNAL(firstOperandChanged(int)),
                      this, SLOT(getResult()));
@@ -45,16 +45,16 @@ void Calculator::getResult()
     double preResult = result;
     if (operation == "+")
         preResult = firstOperand + secondOperand;
-    if (operation == "-")
+    else if (operation == "-")
         preResult = firstOperand - secondOperand;
-    if (operation == "*")
+    else if (operation == "*")
         preResult = firstOperand * secondOperand;
-    if ((operation == "/") && (secondOperand != 0))
+    else if ((operation == "/") && (secondOperand != 0))
         preResult = (double)firstOperand / (double)secondOperand;
     else
         resultToShow = "E";
 
-    if (result != preResult)
+    if (resultToShow != "E")
     {
         result = preResult;
         resultToShow.setNum(result, 'f', 2);
