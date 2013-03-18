@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "calc/SimpleCalculator.h"
 #include "ui_calculator.h"
 
 Calculator::Calculator(QWidget *parent) :
@@ -6,6 +7,7 @@ Calculator::Calculator(QWidget *parent) :
     ui(new Ui::Calculator), memory(0), result(0), currOperand(0), currOper("")
 {
     ui->setupUi(this);
+
     QSignalMapper *numberPressed = new QSignalMapper(this);
 
     {
@@ -41,6 +43,7 @@ Calculator::Calculator(QWidget *parent) :
     QObject::connect(ui->cClearButton, SIGNAL(clicked()), this, SLOT(clearDisplayString()));
     QObject::connect(ui->cCEButton, SIGNAL(clicked()), this, SLOT(clearExpression()));
     QObject::connect(ui->cACButton, SIGNAL(clicked()), this, SLOT(clearAll()));
+    QObject::connect(ui->cBackSpaceButton, SIGNAL(clicked()), this, SLOT(backSpace()));
 
     QSignalMapper *operatorPressed = new QSignalMapper;
 
@@ -48,12 +51,22 @@ Calculator::Calculator(QWidget *parent) :
     QObject::connect(ui->oMultButton, SIGNAL(clicked()), operatorPressed, SLOT(map()));
     QObject::connect(ui->oPlusButton, SIGNAL(clicked()), operatorPressed, SLOT(map()));
     QObject::connect(ui->oMinusButton, SIGNAL(clicked()), operatorPressed, SLOT(map()));
+    QObject::connect(ui->oEqButton, SIGNAL(clicked()), operatorPressed, SLOT(map()));
 
     operatorPressed->setMapping(ui->oDivButton, "/");
     operatorPressed->setMapping(ui->oMultButton, "*");
     operatorPressed->setMapping(ui->oPlusButton, "+");
     operatorPressed->setMapping(ui->oMinusButton, "-");
+    operatorPressed->setMapping(ui->oEqButton, "=");
 
+    QObject::connect(operatorPressed, SIGNAL(mapped(QString)), this, SLOT(operButtonPressed(QString)));
+
+    QObject::connect(ui->nDotButton, SIGNAL(clicked(bool)), ui->nDotButton, SLOT(setEnabled(bool)));
+
+    QObject::connect(ui->mClearButton, SIGNAL(clicked()), this, SLOT(clearMemory()));
+    QObject::connect(ui->mReadButton, SIGNAL(clicked()), this, SLOT(memoryRead()));
+    QObject::connect(ui->mPlusButton, SIGNAL(clicked()), this, SLOT(memoryAdd()));
+    QObject::connect(ui->mMinusButton, SIGNAL(clicked()), this, SLOT(memoryDec()));
 
 }
 
@@ -74,6 +87,16 @@ void Calculator::pushToDisplayString(QString toDisplay)
     emit displayStringChanged(displayString);
 }
 
+void Calculator::backSpace()
+{
+    if (displayString.isEmpty())
+        return;
+    if (displayString[displayString.size() - 1].cell() == '.')
+        ui->nDotButton->setEnabled(true);
+    displayString.remove(displayString.size() - 1, 1);
+    emit displayStringChanged(displayString);
+}
+
 void Calculator::clearDisplayString()
 {
     displayString = "";
@@ -83,6 +106,7 @@ void Calculator::clearDisplayString()
 void Calculator::clearExpression()
 {
     clearDisplayString();
+    ui->oEqButton->setEnabled(true);
 }
 
 void Calculator::clearMemory()
@@ -97,30 +121,80 @@ void Calculator::clearAll()
     clearMemory();
 }
 
-void Calculator::getResult()
+void Calculator::setCurrOperand(double newOperand)
 {
-    if (currOper == "+")
-        result = result + currOperand;
-    if (currOper == "-")
-        result = result + currOperand;
-    if (currOper == "*")
-        result = result + currOperand;
-    if ((currOper == "/") && (currOperand != 0))
-        result = result + currOperand;
-    else
-        emit invalidExpression();
-
+    currOperand = newOperand;
 }
 
-void Calculator::operatorChanged(QString newOperator)
+void Calculator::setCurrOper(QString newOper)
 {
-    double operand = displayString.toDouble();
-    if (currOper == "")
-        result = operand;
+    currOper = newOper;
+}
+
+void Calculator::setResult(double res)
+{
+    result = res;
+}
+
+void Calculator::operButtonPressed(QString operation)
+{
+    currOperand = scanNumber(displayString);
+    clearDisplayString();
+    ui->nDotButton->setEnabled(true);
+
+    if (currOper != "")
+    {
+        SimpleCalculator* simpleCalc = new SimpleCalculator();
+        QObject::connect(simpleCalc, SIGNAL(resultChanged(double)),
+                         this, SLOT(setResult(double)));
+        simpleCalc->changeFirstOperand(result);
+        simpleCalc->changeSecondOperand(currOperand);
+        simpleCalc->changeOperation(currOper);
+        simpleCalc->getResult();
+        currOper = operation;
+        delete simpleCalc;
+
+    }
     else
     {
-        currOperand = operand;
-        getResult();
+        result = currOperand;
+        currOper = operation;
     }
-    currOper = newOperator;
+
+    QString resultAsString;
+    resultAsString.setNum(result, 'f', 2);
+    ui->lineEdit->setText(resultAsString);
+
+    if (currOper == "=")
+    {
+        currOper = "";
+        currOperand = result;
+        ui->oEqButton->setDisabled(true);
+    }
 }
+
+void Calculator::memoryAdd()
+{
+    double toMemory = scanNumber(displayString);
+    memory += toMemory;
+}
+
+void Calculator::memoryDec()
+{
+    double toMemory = scanNumber(displayString);
+    memory -= toMemory;
+}
+
+void Calculator::memoryRead()
+{
+    QString memoryAsString;
+    memoryAsString.setNum(memory, 'f', 2);
+    displayString = memoryAsString;
+    emit displayStringChanged(displayString);
+}
+double Calculator::scanNumber(QString number)
+{
+    return number.toDouble();
+}
+
+

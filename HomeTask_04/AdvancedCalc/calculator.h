@@ -16,6 +16,7 @@ public:
     explicit Calculator(QWidget *parent = 0);
     ~Calculator();
 signals:
+
     bool displayStringChanged(QString);
     bool invalidExpression();
     
@@ -27,17 +28,26 @@ private:
     double currOperand;
     QString currOper;
     void getResult();
+    double scanNumber(QString number);
 
 private slots:
     void appendToDisplayString(QString toDisplay);
     void pushToDisplayString(QString toDisplay);
 
+    void backSpace();
     void clearDisplayString();
     void clearExpression();
     void clearMemory();
     void clearAll();
 
-    void operatorChanged(QString newOperator);
+    void setCurrOperand(double newOperand);
+    void setCurrOper(QString newOper);
+    void setResult(double res);
+    void operButtonPressed(QString operation);
+
+    void memoryAdd();
+    void memoryDec();
+    void memoryRead();
 
 };
 
