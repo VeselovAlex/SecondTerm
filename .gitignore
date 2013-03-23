@@ -217,3 +217,4 @@ pip-log.txt
 *.Debug
 *.Release
 Makefile
+ui_*.h
