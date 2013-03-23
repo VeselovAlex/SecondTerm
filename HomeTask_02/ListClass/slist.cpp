@@ -57,6 +57,7 @@ void SingleList::remove(int value)
         head = head->next;
         temp->next = NULL;
         delete  temp;
+        size--;
         return;
     }
     else
@@ -81,4 +82,9 @@ void SingleList::printall()
 {
     if (!isEmpty())
         head->print();
+}
+
+ListElement *SingleList::getHeadPointer()
+{
+    return head;
 }

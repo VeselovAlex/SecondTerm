@@ -1,8 +1,9 @@
-TEMPLATE = app
-CONFIG += console
-CONFIG -= qt
+QT += core
 
-SOURCES += main.cpp \
+TEMPLATE = app
+CONFIG += console qtestlib
+
+SOURCES += \
     list.cpp \
     slist.cpp \
     listel.cpp \
@@ -14,5 +15,7 @@ HEADERS += \
     slist.h \
     listel.h \
     doublelistel.h \
-    doublelist.h
+    doublelist.h \
+    Test/SLListTest.h \
+    Test/DLListTest.h
 

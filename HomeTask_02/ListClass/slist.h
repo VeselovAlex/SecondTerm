@@ -10,6 +10,7 @@ public:
     void add(int value);
     void remove(int value);
     void printall();
+    ListElement* getHeadPointer();
 private:
     ListElement* head;
 };

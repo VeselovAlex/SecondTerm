@@ -73,3 +73,8 @@ void DoubleList::printall()
     if(!isEmpty())
         head->print();
 }
+
+DoubleListElement *DoubleList::getHeadPointer()
+{
+    return head;
+}
