@@ -19,6 +19,11 @@ public:
 
     ~Matrix();
     /**
+     * @brief Get the access to matrix
+     * @return pointer to matrix array
+     */
+    int** pMatrix();
+    /**
      * @brief fillMatrix Fill matrix values (integers only)
      */
     void fillMatrix();

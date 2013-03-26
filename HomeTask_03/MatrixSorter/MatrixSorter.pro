@@ -1,15 +1,16 @@
+QT += core
+
 TEMPLATE = app
-CONFIG += console
+CONFIG += console qtestlib
 CONFIG -= app_bundle
-CONFIG -= qt
 
 SOURCES += \
     matrix.cpp \
-    main.cpp \
     quicksort.cpp
 
 HEADERS += \
     matrix.h \
     sort.h \
-    quicksort.h
+    quicksort.h \
+    Tests/MatrixSorterTest.h
 

@@ -1,16 +1,24 @@
+QT += core
+
 TEMPLATE = app
 CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += qtestlib
 
-SOURCES += main.cpp \
+SOURCES += \
     bubblesort.cpp \
     quicksort.cpp \
-    chosesort.cpp
+    chosesort.cpp \
+    main.cpp
 
 HEADERS += \
     sort.h \
     bubblesort.h \
     quicksort.h \
-    chosesort.h
+    chosesort.h \
+    Tests/BubbleSortTest.h \
+    Tests/QuickSortTest.h \
+    Tests/ChoseSortTest.h \
+    Tests.h
+
+OTHER_FILES +=
 

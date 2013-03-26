@@ -21,6 +21,11 @@ Matrix::~Matrix()
     delete[] matrix;
 }
 
+int **Matrix::pMatrix()
+{
+    return matrix;
+}
+
 void Matrix::fillMatrix()
 {
     for (int i = 0; i < nRows * nCols; i++)
