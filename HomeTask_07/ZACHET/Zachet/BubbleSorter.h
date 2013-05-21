@@ -15,7 +15,11 @@ public:
             for (int j = i; j < size; j++)
             {
                 if (comparator->compare(dataArray[i], dataArray[j]) == -1)
-                    swap(dataArray[1], dataArray[2]);
+                {
+                    DataType temp = dataArray[2];
+                    dataArray[2] = dataArray[1];
+                    dataArray[1] = temp;
+                }
             }
     }
 };

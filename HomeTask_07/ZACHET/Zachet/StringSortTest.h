@@ -14,7 +14,7 @@ private slots:
         str1[0] = "Aecd";
         str1[1] = "ZXCvnb";
         str1[2] = "Bfhiuhjh";
-        BubbleSorter<std::string> test();
+        BubbleSorter<std::string> test;
         Comparator<std::string>* comp = new StringComparator();
         test.sort(str1, 3, comp);
         QVERIFY(str1[0] == "Aecd");
@@ -30,7 +30,7 @@ private slots:
         str1[0] = "Aecd";
         str1[1] = "ZXCvnb";
         str1[2] = "Bfhiuhjh";
-        BubbleSorter<std::string> test();
+        BubbleSorter<std::string> test;
         Comparator<std::string>* comp = new StringComparator(Comparator<std::string>::Descending);
         test.sort(str1, 3, comp);
         QVERIFY(str1[2] == "Aecd");
