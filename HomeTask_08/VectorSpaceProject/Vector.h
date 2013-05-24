@@ -1,5 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
+#include <assert.h>
 
 
 template <typename DataType>
@@ -11,7 +12,7 @@ public:
         checkNULL();
     }
 
-    Vector(const Vector<DataType>& source) : dim(source.dim), nullVector(source.nullVector)
+    Vector(const Vector<DataType>& source) : dim(source.dim), isNullVector(source.isNullVector)
     {
         coordArray = new DataType[dim];
         try
@@ -19,21 +20,21 @@ public:
             for (unsigned int i = 0; i < dim; i++)
                 coordArray[i] = source.coordArray[i];
         }
-        catch(...){}
+        catch(...)
+        {
+            throw;
+        }
     }
 
     bool isNULLVector()
     {
-        return nullVector;
+        return isNullVector;
     }
 
-    DataType& operator[](int n)
+    DataType& operator[](unsigned int n)
     {
-        try
-        {
-            return coordArray[n];
-        }
-        catch(...){}
+        assert(n < dim);
+        return coordArray[n];
     }
 
     Vector& operator+(const Vector<DataType>& rOperand)
@@ -43,9 +44,7 @@ public:
             Vector<DataType> result(rOperand);
             for (unsigned int i = 0; i < dim; i++)
             {
-                DataType coord1 = result[i];
-                DataType coord2 = coordArray[i];
-                result[i] = coord1 + coord2;
+                result[i] = result[i] + coordArray[i];
                 result.checkNULL();
             }
             return (result);
@@ -76,9 +75,7 @@ public:
             Vector<DataType> result(rOperand);
             for (unsigned int i = 0; i < dim; i++)
             {
-                DataType coord1 = -result[i];
-                DataType coord2 = coordArray[i];
-                result[i] = coord1 + coord2;
+                result[i] = -result[i] + coordArray[i];
                 result.checkNULL();
             }
             return (result);
@@ -93,9 +90,7 @@ public:
         {
             for (unsigned int i = 0; i < dim; i++)
             {
-                DataType coord1 = rOperand[i];
-                DataType coord2 = coordArray[i];
-                result =  result + (coord1 * coord2);
+                result =  result + (rOperand[i] * coordArray[i]);
             }
             return result;
         }
@@ -109,26 +104,26 @@ public:
 private:
     void checkNULL()
     {
-        nullVector = true;
+        isNullVector = true;
         try
         {
             for (unsigned int i = 0; i < dim; i++)
             {
                 if (coordArray[i] != 0)
                 {
-                    nullVector = false;
+                    isNullVector = false;
                     return;
                 }
             }
         }
         catch(...)
         {
-            nullVector = true;
+            isNullVector = true;
         }
     }
 
 private:
-    bool nullVector;
+    bool isNullVector;
     unsigned int dim;
     DataType* coordArray;
 
