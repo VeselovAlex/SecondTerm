@@ -10,7 +10,7 @@ ExprTree::ExprTree(double value, char currOper)
 }
 
 
-void ExprTree::parce(std::ifstream &exprStream, std::ofstream &outStream, BinaryTreeNode<ExprNode> *place)  throw (std::exception)
+void ExprTree::parce(std::ifstream &exprStream, std::ofstream &outStream, BinaryTreeNode<ExprNode> *place)  throw (incorrectExpressionExc)
 {
     try
     {
@@ -30,7 +30,7 @@ void ExprTree::parce(std::ifstream &exprStream, std::ofstream &outStream, Binary
                 place->setValue(data);
             }
             else
-                throw std::exception();
+                throw incorrectExpressionExc();
         }
         else
         {
@@ -54,20 +54,20 @@ void ExprTree::parce(std::ifstream &exprStream, std::ofstream &outStream, Binary
             exprStream >> bracket;
 
             if (bracket != ')')
-                throw std::exception();
+                throw incorrectExpressionExc();
         }
 
 
 
     }
-    catch(std::exception)
+    catch(incorrectExpressionExc)
     {
         outStream << "Invalid expression" << std::endl;
         throw;
     }
 }
 
-double ExprTree::count(BinaryTreeNode<ExprNode> *currentRoot) throw (std::exception)
+double ExprTree::count(BinaryTreeNode<ExprNode> *currentRoot) throw (incorrectExpressionExc)
 {
     try
     {
@@ -81,17 +81,17 @@ double ExprTree::count(BinaryTreeNode<ExprNode> *currentRoot) throw (std::except
             return newNode.currValue;
         }
         else
-            throw std::exception();//Неполное дерево
+            throw incorrectExpressionExc();//Неполное дерево - нехватает операндов
 
     }
-    catch(std::exception)
+    catch(divisionByZeroExc)
     {
-        throw;
-        return 0;
+        throw incorrectExpressionExc();
     }
+    return 0;
 }
 
-double ExprTree::makeOperation(double lOperand, char oper, double rOperand) throw (std::exception)
+double ExprTree::makeOperation(double lOperand, char oper, double rOperand) throw (divisionByZeroExc, incorrectExpressionExc)
 {
     {
         if (oper == '+')
@@ -105,13 +105,13 @@ double ExprTree::makeOperation(double lOperand, char oper, double rOperand) thro
                 return lOperand / rOperand;
             else
             {
-                throw std::exception();
+                throw divisionByZeroExc();
                 return 0;
             }
 
         else
         {
-            throw std::exception();
+            throw incorrectExpressionExc();
             return 0;
         }
     }

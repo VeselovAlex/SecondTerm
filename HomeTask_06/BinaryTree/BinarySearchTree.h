@@ -31,14 +31,10 @@ public:
      * @brief remove Remove value from BST (including multivalues)
      * @param value Item to remove
      */
-    virtual void remove(DataType value) throw (std::exception)
+    virtual void remove(DataType value)
     {
-        try
-        {
-            remove(rootNode, value);
-            elemCounter--;
-        }
-        catch(...){}
+        remove(rootNode, value);
+        elemCounter--;
     }
     /**
      * @brief find
@@ -64,67 +60,10 @@ public:
 
 
 private:
-    void addTo(BinaryTreeNode<DataType>*& curRoot, DataType value)
-    {
-        if (curRoot == NULL)
-        {
-            curRoot = new BinaryTreeNode<DataType>(value);
-            return;
-        }
+    void addTo(BinaryTreeNode<DataType>*& curRoot, DataType value);
 
-        if (value < curRoot->value())
-            addTo(curRoot->left(), value);
-        else if (value == curRoot->value())
-            curRoot->operator ++(0);
-        else
-            addTo(curRoot->right(), value);
-    }
+    void remove(BinaryTreeNode<DataType>*& curRoot, DataType value);
 
-    void remove(BinaryTreeNode<DataType>*& curRoot, DataType value) throw (std::exception)
-    {
-        if (curRoot == NULL)
-        {
-            throw std::exception();// Нет такого эл-та
-        }
-
-        if (value < curRoot->value())
-            remove(curRoot->left(), value);
-        else if (value > curRoot->value())
-            remove(curRoot->right(), value);
-        else
-            if (curRoot->count() > 1)
-                curRoot->operator --(0);
-            else
-                if (curRoot->state() == BinaryTreeNode<DataType>::noChild)
-                {
-                    delete curRoot;
-                    curRoot = NULL;
-                }
-                else if (curRoot->state() == BinaryTreeNode<DataType>::leftChildOnly)
-                {
-                    BinaryTreeNode<DataType>* tmp = curRoot->left();
-                    curRoot->setLeft(NULL);
-                    delete curRoot;
-                    curRoot = tmp;
-                }
-                else if (curRoot->state() == BinaryTreeNode<DataType>::rightChildOnly)
-                {
-                    BinaryTreeNode<DataType>* tmp = curRoot->right();
-                    curRoot->setRight(NULL);
-                    delete curRoot;
-                    curRoot = tmp;
-                }
-                else
-                {
-                    BinaryTreeNode<DataType>*& tmp = leftMostChild(curRoot->right());
-                    curRoot->setValue(tmp->value());
-                    curRoot->setCount(tmp->count());
-                    BinaryTreeNode<DataType>* temp = tmp;
-                    tmp = temp->right();
-                    temp->setRight(NULL);
-                    delete temp;
-                }
-    }
 
     BinaryTreeNode<DataType>*& leftMostChild(BinaryTreeNode<DataType>* root)
     {
@@ -138,5 +77,69 @@ protected:
     BinaryTreeNode<DataType>* rootNode;
     unsigned int elemCounter;
 };
+
+template <typename DataType>
+void BinarySearchTree<DataType>::remove(BinaryTreeNode<DataType> *&curRoot, DataType value)
+{
+    if (curRoot == NULL)
+    {
+        return;
+    }
+
+    if (value < curRoot->value())
+        remove(curRoot->left(), value);
+    else if (value > curRoot->value())
+        remove(curRoot->right(), value);
+    else
+        if (curRoot->count() > 1)
+            (*curRoot)--;
+        else
+            if (curRoot->state() == BinaryTreeNode<DataType>::noChild)
+            {
+                delete curRoot;
+                curRoot = NULL;
+            }
+            else if (curRoot->state() == BinaryTreeNode<DataType>::leftChildOnly)
+            {
+                BinaryTreeNode<DataType>* tmp = curRoot->left();
+                curRoot->setLeft(NULL);
+                delete curRoot;
+                curRoot = tmp;
+            }
+            else if (curRoot->state() == BinaryTreeNode<DataType>::rightChildOnly)
+            {
+                BinaryTreeNode<DataType>* tmp = curRoot->right();
+                curRoot->setRight(NULL);
+                delete curRoot;
+                curRoot = tmp;
+            }
+            else
+            {
+                BinaryTreeNode<DataType>*& tmp = leftMostChild(curRoot->right());
+                curRoot->setValue(tmp->value());
+                curRoot->setCount(tmp->count());
+                BinaryTreeNode<DataType>* temp = tmp;
+                tmp = temp->right();
+                temp->setRight(NULL);
+                delete temp;
+            }
+    }
+
+template <typename Datatype>
+void BinarySearchTree<DataType>::addTo(BinaryTreeNode<DataType> *&curRoot, DataType value)
+{
+    if (curRoot == NULL)
+    {
+        curRoot = new BinaryTreeNode<DataType>(value);
+        return;
+    }
+
+    if (value < curRoot->value())
+        addTo(curRoot->left(), value);
+    else if (value == curRoot->value())
+        (*curRoot)++;
+    else
+        addTo(curRoot->right(), value);
+}
 
 #endif // BINARYSEARCHTREE_H

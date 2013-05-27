@@ -10,6 +10,9 @@ struct ExprNode
     char oper;
 };
 
+class incorrectExpressionExc{};
+class divisionByZeroExc{};
+
 class ExprTree
 {
 public:
@@ -56,7 +59,7 @@ public:
         addRight(place,node);
     }
 
-    double count() throw (std::exception)
+    double count() throw (incorrectExpressionExc)
     {
         return count(root);
     }
@@ -67,16 +70,9 @@ public:
      * @param exprStream ifstream source of expression to parce
      * @param outStream ofstream for dubug info
      */
-    void parce(std::ifstream &exprStream, std::ofstream &outStream) throw (std::exception)
+    void parce(std::ifstream &exprStream, std::ofstream &outStream) throw (incorrectExpressionExc)
     {
-        try
-        {
-            parce(exprStream, outStream, root);
-        }
-        catch(std::exception)
-        {
-            throw;
-        }
+        parce(exprStream, outStream, root);
     }
 
     /**
@@ -93,11 +89,11 @@ public:
 private:
     BinaryTreeNode<ExprNode>* root;
 
-    double count(BinaryTreeNode<ExprNode>* currentRoot) throw (std::exception);
+    double count(BinaryTreeNode<ExprNode>* currentRoot) throw (incorrectExpressionExc);
 
-    void parce(std::ifstream &exprStream, std::ofstream &outStream, BinaryTreeNode<ExprNode> *place) throw (std::exception);
+    void parce(std::ifstream &exprStream, std::ofstream &outStream, BinaryTreeNode<ExprNode> *place) throw (incorrectExpressionExc);
 
-    double makeOperation(double lOperand, char oper, double rOperand) throw(std::exception);
+    double makeOperation(double lOperand, char oper, double rOperand) throw(divisionByZeroExc, incorrectExpressionExc);
 
     void printExprTree(std::ofstream &outStream, BinaryTreeNode<ExprNode> *source);
 

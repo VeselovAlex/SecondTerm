@@ -69,7 +69,7 @@ private:
                 QVERIFY(qFuzzyCompare(counter.count(), controlValue));
             }
         }
-        catch(std::exception)
+        catch(incorrectExpressionExc)
         {
             output << "\nExpression parce failed\n";
         }
