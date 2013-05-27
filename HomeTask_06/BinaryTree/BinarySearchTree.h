@@ -3,6 +3,8 @@
 
 #include "Tree.h"
 
+#include <QList>
+
 template <typename DataType>
 class BinarySearchTree : public Tree<DataType>
 {
@@ -58,14 +60,29 @@ public:
         return NULL;
     }
 
+    virtual QList<DataType> preOrderDetour()
+    {
+        return preOrderDetour(rootNode);
+    }
+    virtual QList<DataType> inOrderDetour()
+    {
+        return inOrderDetour(rootNode);
+    }
+    virtual QList<DataType> postOrderDetour()
+    {
+        return postOrderDetour(rootNode);
+    }
 
 private:
     void addTo(BinaryTreeNode<DataType>*& curRoot, DataType value);
 
     void remove(BinaryTreeNode<DataType>*& curRoot, DataType value);
 
+    virtual QList<DataType> preOrderDetour(BinaryTreeNode<DataType>* root);
+    virtual QList<DataType> inOrderDetour(BinaryTreeNode<DataType>* root);
+    virtual QList<DataType> postOrderDetour(BinaryTreeNode<DataType>* root);
 
-    BinaryTreeNode<DataType>*& leftMostChild(BinaryTreeNode<DataType>* root)
+    BinaryTreeNode<DataType>* leftMostChild(BinaryTreeNode<DataType>* root)
     {
         BinaryTreeNode<DataType>* tmp = root;
         while(tmp->left() != NULL)
@@ -115,17 +132,15 @@ void BinarySearchTree<DataType>::remove(BinaryTreeNode<DataType> *&curRoot, Data
             }
             else
             {
-                BinaryTreeNode<DataType>*& tmp = leftMostChild(curRoot->right());
+                BinaryTreeNode<DataType>* tmp = leftMostChild(curRoot->right());
                 curRoot->setValue(tmp->value());
                 curRoot->setCount(tmp->count());
-                BinaryTreeNode<DataType>* temp = tmp;
-                tmp = temp->right();
-                temp->setRight(NULL);
-                delete temp;
+                BinarySearchTree<DataType>::remove(curRoot->right(), tmp->value());
+
             }
     }
 
-template <typename Datatype>
+template <typename DataType>
 void BinarySearchTree<DataType>::addTo(BinaryTreeNode<DataType> *&curRoot, DataType value)
 {
     if (curRoot == NULL)
@@ -142,4 +157,54 @@ void BinarySearchTree<DataType>::addTo(BinaryTreeNode<DataType> *&curRoot, DataT
         addTo(curRoot->right(), value);
 }
 
+template <typename DataType>
+QList<DataType> BinarySearchTree<DataType>::preOrderDetour(BinaryTreeNode<DataType>* root)
+{
+    if (root == NULL)
+        return QList<DataType>();
+    QList<DataType> list;
+    for (unsigned int i = 0; i < root->count(); i++)
+    {
+        list << root->value();
+    }
+    if (root->left() != NULL)
+        list << preOrderDetour(root->left());
+    if (root->right() != NULL)
+        list << preOrderDetour(root->right());
+    return list;
+}
+
+template <typename DataType>
+QList<DataType> BinarySearchTree<DataType>::inOrderDetour(BinaryTreeNode<DataType>* root)
+{
+    if (root == NULL)
+        return QList<DataType>();
+    QList<DataType> list;
+    if (root->left() != NULL)
+        list << preOrderDetour(root->left());
+    for (unsigned int i = 0; i < root->count(); i++)
+    {
+        list << root->value();
+    }
+    if (root->right() != NULL)
+        list << preOrderDetour(root->right());
+    return list;
+}
+
+template <typename DataType>
+QList<DataType> BinarySearchTree<DataType>::postOrderDetour(BinaryTreeNode<DataType>* root)
+{
+    if (root == NULL)
+        return QList<DataType>();
+    QList<DataType> list;
+    if (root->left() != NULL)
+        list << preOrderDetour(root->left());
+    if (root->right() != NULL)
+        list << preOrderDetour(root->right());
+    for (unsigned int i = 0; i < root->count(); i++)
+    {
+        list << root->value();
+    }
+    return list;
+}
 #endif // BINARYSEARCHTREE_H

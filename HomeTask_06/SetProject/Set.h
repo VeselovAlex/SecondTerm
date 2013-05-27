@@ -26,16 +26,9 @@ public:
      * @brief add
      *  Удаление элемента из множества (оддерживаются повторяющиеся элементы)
      */
-    void remove(DataType item) throw (std::exception)
+    void remove(DataType item)
     {
-        try
-        {
-            dataTree->remove(item);
-        }
-        catch (std::exception)
-        {
-            throw;
-        }
+        dataTree->remove(item);
     }
 
     bool contains(DataType item)

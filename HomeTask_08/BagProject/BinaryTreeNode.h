@@ -4,6 +4,10 @@
 
 
 template <typename DataType>
+/**
+ * @brief The BinaryTreeNode class
+ *The class for binary-search-tree abstract data type, consists the definition of tree node
+ */
 class BinaryTreeNode
 {
 public:
